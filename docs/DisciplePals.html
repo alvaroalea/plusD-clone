@@ -1,0 +1,587 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head>
+	<meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+	<title></title>
+	<meta name="GENERATOR" content="StarOffice/5.2 (Linux)">
+	<meta name="AUTHOR" content=" ">
+	<meta name="CREATED" content="20030912;23341900">
+	<meta name="CHANGEDBY" content=" ">
+	<meta name="CHANGED" content="20030914;1145700">
+	<style>
+	<!--
+		@page { margin-left: 1.25in; margin-right: 1.25in; margin-top: 1in; margin-bottom: 1in }
+		P { margin-bottom: 0.08in }
+		H1 { margin-bottom: 0.08in; font-family: "helvetica", sans-serif; font-size: 16pt }
+		H2 { margin-bottom: 0.08in; font-family: "helvetica", sans-serif; font-size: 14pt; font-style: italic }
+	-->
+	</style>
+</head>
+<body>
+<h1 align="CENTER">The Disciple PALS, finally unveiled</h1>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<h2>Background</h2>
+<p style="margin-bottom: 0in">One of the biggest mysteries of the
+Disciple interface is the two PAL2L08 ics (Ic8 &amp; Ic9), what they
+do, how to get replacements, and how to get the fusemap (jedec file /
+equations) that they contain. I hope this page will answer all this
+questions, along with a thorough explanation of each logic equation
+that these nice Ics contain in their silicon make up.</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<h2>Copyright</h2>
+<p>The copyright for all the equations in the PAL ICs is owned by
+Bruce Gordon, the original disciple designer. From what I understand
+from reading some posts on usenet, the original equations were on a
+disc that got lost, and remained unknown for sometime. I also have
+seen some posts from Bob Brenchley indicating that he was in touch
+with Bruce, and if they were found, he would have no problem with the
+distribution.</p>
+<p>As these Ics have a protection bit which stops you reading their
+fuse map, which is usually blown, finding out their contents and
+replacing them is difficult. Bruce, if you are out there, thanks for
+a GREAT interface, and if you want me to pull this page, I'll be more
+than happy to do so.</p>
+<p><br><br>
+</p>
+<h2>Q1 How did you figure it out then ?</h2>
+<p> Fortunatley a nice dutch man called Rudi Biesma placed his Ics in
+a high / low device which sends every logic combination to every pin
+and produces a table of the outputs. It then can produce a fuse map
+of the IC. With this lovely Jedec file from Rudy, I disassembled it
+and obtained the equations using PALASM, and then set about figuring
+out just what the heck was going on.</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<h2>Q2. Ok what the hell is a PAL20L8 ?</h2>
+<p style="margin-bottom: 0in">A PAL IC is an older type of
+programmable logic IC. Basically you can program it with a load of
+boolean equations to give whatever outputs you want under certain
+input conditions. PALs were later replaced by GALS (which can be
+programmed to act like a PAL) and now something called ????. The
+PAL20L8 ICs in the disciple have been out of production for many
+years now, and are increasingly hard to come by. Your best bet is to
+search for obsolete electronic component suppliers on the web. They
+are available, but can be pricey as minimum order quantaties are
+required. The ones normally found in a disciple are manunfactured by
+national semiconductor, and are of the A variety (A is a speed rating
+A is the slowest). I have successfully replaced them with MMI
+PAL20L8B ICs which are slightly faster, but are pin for pin
+compatible. PAL20L8 Ics from other manufactures may be just as
+compatible, but it is well worth checking as these things are
+expensive (around £10 quid a chip all in, plus the min order,
+which is normally &gt; £100).  Rudi Biesma tried to replace his
+PAL20L8s with GALS but reported no luck.</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<h2>Q3. Where can I get fully programmed PALs for the disciple ?</h2>
+<p style="margin-bottom: 0in">Either buy the Ics yourself and get
+someone with a programmer to program them, or if you are really stuck
+I will supply both PAL Ics, fully programmed for £30 + postage.</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<h2>Q4. Ok what do they do ?</h2>
+<p style="margin-bottom: 0in">The function of the two PAL ics in the
+disciple are to control the following :</p>
+<ul>
+	<li><p style="margin-bottom: 0in">Page out the speccy ROM and enable
+	the Disciple RAM / ROM when the Z80 accesses certain memory
+	addresses (0x0000, 0x0008, 0x0066, 0x28E) or an NMI is generated
+	(snapshot button)</p>
+	</li><li><p style="margin-bottom: 0in">Page out speccy ROM and enable
+	Disciple ROM &amp; RAM when a reset is performed</p>
+	</li><li><p style="margin-bottom: 0in">Page out speccy ROM and enable
+	Disciple ROM &amp; RAM when a network request is performed</p>
+	</li><li><p style="margin-bottom: 0in">Holding the speccy ROM out and the
+	Disciple ROM &amp; RAM enabled  after they have been brought in for
+	a specific condition, until they need to be paged out again</p>
+	</li><li><p style="margin-bottom: 0in">Page out the speccy ROM and enable
+	Disiciple ROM &amp; RAM when an IO request is written to port 0x7B
+	(reset / set boot control of DOS needs to reloaded) 
+	</p>
+	</li><li><p style="margin-bottom: 0in">Enable the WD1772 disc controller
+	(IC4)  when an IO request is written or read from its' I/O ports
+	(0x1B, 0x5B, 0x9B, 0xDB)</p>
+	</li><li><p style="margin-bottom: 0in">Generate a clock pulse for IC5
+	when an IO write request is sent to the WD1772 control port (0x1F)</p>
+	</li><li><p style="margin-bottom: 0in">Output a clock pulse to the
+	printer port IC11 when data is written to it's port (0xFB)</p>
+	</li><li><p style="margin-bottom: 0in">Enable the joystick controller Ics
+	(IC1 &amp; IC10) when an IO request is read from the  joystick ports
+	(kempston and sinclair)</p>
+	</li><li><p style="margin-bottom: 0in">Tell the spectrum to WAIT when
+	data is being pushed out to the network</p>
+	<p style="margin-bottom: 0in"></p>
+</li></ul>
+<p style="margin-bottom: 0in">So you can see these sweet little IC's
+actually control most of the disciple, and NOTHING works without
+either one, as their logic equations are deeply intertwined........</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<h2>Q5. Ok enough blabbering show me (and explain) the equations !</h2>
+<p style="margin-bottom: 0in">Woe there sailor boy ! Before you go
+wading in, understand a few things about boolean logic and electronic
+symbols.</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in">The symbols :</p>
+<p style="margin-bottom: 0in">^ means active low (ie. ^RD means that
+if a read is happening, this line will be LOW)</p>
+<p style="margin-bottom: 0in">/ means NOT</p>
+<p style="margin-bottom: 0in">+ means OR</p>
+<p style="margin-bottom: 0in">* means AND</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in">You will also have to have a rough
+understanding of how the good ole Z80 works (what lines are set when
+performing IO, mem read / writes etc) and a reasonable understanding
+of the disciple itself. The latter can be obtained for the excellent
+<a href="http://www.ramsoft.bbk.org/">Ramsoft</a> "<a href="https://k1.spdns.de/Vintage/Sinclair/82/Peripherals/Disc%20Interfaces/DiSCiPLE%20%26%20Plus%20D%20(MGT%2C%20Datel)/Technical%20stuff/PALs%20-%20DiSCIPLE%20%26%20MGT%20Plus%20D/disciple_techguide.txt">Disciple / +D Technical Guide</a>"</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in">A short note about tristate. Some IC
+input / outputs can have 3 levels. These are logic zero, logic one
+and disconnected (ie just floating). The third state is very handy
+when you only want an IC to do stuff some of the time and pretend
+it's not there others. Just like the disciple ROM / RAM. While
+physically connected to the address / data bus, unless their Chip
+Enable (CE) pin is activated, their pins will be internally
+disconnected, so won't interfere unless requested to.</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in">It is also recommended you look at the
+disciple circuit diagram shown below to see how these Ics fit
+together and link to other disciple components.</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in">Be aware that outputs O17 and O18 of
+IC9 feed into inputs I1 and I2 of IC8 and output O22 from IC8 feed
+into input I14 of IC9, providing a nice logic link between all the
+equations; see told you they were intertwined !! 
+</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in">In the equations I've substituted
+wherever possible the names of the signals on the spectrum bus the
+Inputs and Outputs are connected to. The references p8_022, p9_O17
+and p9_O18 refer to pal IC8 Output 22, pal IC9 Output 17 and pal IC9
+Output 18 resepectivley.</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in">Hey ho, onwards with these equations.
+The equation is listed, with my explaination below.</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in; page-break-before: always">CHIP DIS_ASM
+PAL20L8 (PAL IC8)</p>
+<p style="margin-bottom: 0in">Pin Descriptions</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+1 p9_O18</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+2 p9_017 </font></font>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+3 A10</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+4 A0</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+5 A4</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+6 ^RESET</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+7 ^WR</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+8 ^RD</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+9 ^NREQ</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+10 A12</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+11 A13</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+12 GND</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+13 A15</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+14 A14</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+15 O15	(/CE Disciple RAM)</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+16 O16	(/CE Disciple ROM)</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+17 O17	(/M1)</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+18 O18	(NC)</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+19 O19	(NC)</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+20 ^ROMCS</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+21 O21	(NC)</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+22 O22	(PAL IC9, I12)</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+23 A11</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+24 VCC</font></font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in">EQUATIONS</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+ O22.TRST = VCC</font></font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+/O22 = /A4 * /^RD *   ^NREQ</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+     + /A4 * /^WR *   ^NREQ</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+     + /A10 * /A11 * /A8 * /A4 * /^RD * /^NREQ * /A12 * /A14 *</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+       /A13 * /A15</font></font></p>
+<p style="margin-bottom: 0in"><font color="#ff0000"><span style="background: transparent">Used
+as a partial equation to help form other equations in Pal9</span></font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+ O21.TRST = VCC</font></font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+/O21 =  ^ROMCS</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+     + /p9_O18* /^RD *  O17</font></font></p>
+<p style="margin-bottom: 0in"><font color="#ff0000">Used as a partial
+equation to O15, O16 and O20 (ROMCS). Condition met when IOREQ to
+port 0xBB OR memory read from 0x0001, 0x008 (RST8), 0x0066 (NMI
+code), 0x028E or speccy ROM already paged out</font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+ ^ROMCS.TRST = VCC</font></font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+/^ROMCS = /O17</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+     <font color="#000000">+  O21</font></font></font></p>
+<p style="margin-bottom: 0in"><font color="#000000"><font face="Courier, monospace"><font size="2">
+     + /^RESET</font></font></font></p>
+<p style="margin-bottom: 0in"><font color="#000000"><font size="2"><font face="Courier, monospace">
+     + /p9_O18* /^WR</font></font></font></p>
+<p style="margin-bottom: 0in"><font color="#ff0000">Pull speccy rom
+out when O17 met or a write to any ports mentioned in p9_018 or a
+RESET happens.</font></p>
+<p style="margin-bottom: 0in; page-break-before: always"><font face="Courier, monospace"><font size="2">
+ O19.TRST = VCC</font></font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+/O19 =  O18</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+     + /^RESET</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+     + /p9_O17* /^RD</font></font></p>
+<p style="margin-bottom: 0in"><font color="#ff0000">Condition met
+when a reset happens or a read to port 0x7B (set/unset  boot
+flipflop) or O18. Intertwined with O18 below. Used as a partial to
+O16 and O15 below</font>.</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+ O18.TRST = VCC</font></font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+/O18 =  O19</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+     + /p9_O17* /^WR</font></font></p>
+<p style="margin-bottom: 0in"><font color="#ff0000">Condition met
+when a write to port 0x7B (set/unset  boot flipflop) or O19. Used as
+a partial to O16 and O15 below.</font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+ O16.TRST = VCC</font></font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+/O16 =  ^ROMCS *  O18 * /^RD * /^NREQ * /A14 * /A13 * /A15</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+     +  ^ROMCS *  O19 * /^RD * /^NREQ * /A14 *  A13 * /A15</font></font></p>
+<p style="margin-bottom: 0in"><font color="#ff0000">O16 is the
+Disciple ROM CE line, so this equation controls when the Disciple ROM
+should be paged in. Met when the speccy ROM is OUT and we are reading
+from address &lt; 8192 and the RAM flip flop is unset OR if the
+address is &lt; 16384 and the RAM flip flop is not set.</font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+ O15.TRST = VCC</font></font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+/O15 =  ^ROMCS *  O19 * /^RD * /^NREQ * /A14 * /A13 * /A15</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+     +  ^ROMCS *  O19 * /^WR * /^NREQ * /A14 * /A13 * /A15</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+     +  ^ROMCS *  O18 * /^RD * /^NREQ * /A14 *  A13 * /A15</font></font></p>
+<p style="margin-bottom: 0in"><font size="2"><font face="Courier, monospace">
+     +  ^ROMCS * /^WR *  O18 * /^NREQ * /A14 *  A13 * /A15</font></font></p>
+<p style="margin-bottom: 0in"><font color="#ff0000">O15 is the
+Disciple RAM CE line, so this equation controls when the Disciple RAM
+should be paged in. Met when the speccy ROM is OUT and we are reading
+/ writing from address &lt; 8192 (RAM flip flop set) or reading /
+writing from address &lt; 16384 (RAM flip flop not set).</font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in">Phew, thats IC8 done. It was the
+hardest. Glad thats over. Ready for IC9 ?</p>
+<p style="margin-bottom: 0in; page-break-before: always">CHIP DIS_ASM
+PAL20L8 (Disciple IC9)</p>
+<p style="margin-bottom: 0in">Pin Descriptions</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+1 A9</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+2 A5 </font></font>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+3 A6</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+4 A7</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+5 ^WR</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+6 ^RD</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+7 ^IORQ</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+8 A3</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+9 A2</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+10 A1</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+11 A0</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+12 GND</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+13 NET</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+14 p8_O22</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+15 O15		(CLK Disciple IC5)</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+16 O16		(/CS Disciple IC4 WD1772)</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+17 O17		(I2 PAL IC8)</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+18 O18		(I1 PAL IC8)</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+19 O19		(/CE Disciple IC1a joystick1)</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+20 O20		(/CE Disciple IC10a joystick2)</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+21 O21		(/WAIT)</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+22 O22		(CLK Disciple IC11)</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+23 ^N1</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">PIN
+24 VCC</font></font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in">EQUATIONS</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+ O22.TRST = VCC</font></font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+/O22 =   A5*   A6 *  ^N1 *   A7 * /^WR * /^IORQ *   A3 * /A2 *</font></font></p>
+<p style="margin-bottom: 0in"><font size="2"><font face="Courier, monospace">
+        A1 *  p8_O22 *  A0</font></font></p>
+<p style="margin-bottom: 0in"><font color="#ff0000">Generate a clock
+pulse for the printer IC11 when an IOREQ write is sent to printer
+port (0xFB).</font> 
+</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+ O21.TRST = VCC</font></font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+/O21 =   A5* /A6 *  ^N1 * /A7 * /^WR * /^IORQ *   A3 * /A2 *</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+        A1 *  p8_O22 *  A0 *  NET</font></font></p>
+<p style="margin-bottom: 0in"><font color="#ff0000">Tell the speccy
+to wait while a network request is written to the network port
+(0x3B).</font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+ O20.TRST = VCC</font></font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+/O20 = /A5* /A6 *  ^N1 * /A7 * /^RD * /^IORQ *   A3 *   A2 *</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+        A1 *  p8_O22 *  A0</font></font></p>
+<p style="margin-bottom: 0in"><font color="#ff0000">IOREQ read of
+joy1 port (0x1F). Set CE on IC10</font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+ O19.TRST = VCC</font></font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+/O19 =   A5*   A6 *  ^N1 *   A7 * /^RD * /^IORQ *   A3 *   A2 *</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+        A1 *  p8_O22 * /A0</font></font></p>
+<p style="margin-bottom: 0in"><font color="#ff0000">IOREQ read of
+joy2 port (0xFE). Set CE on IC1</font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in; page-break-before: always"><font face="Courier, monospace"><font size="2">
+ O18.TRST = VCC</font></font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+/O18 =   A5* /A6 *  ^N1 *   A7 * /^IORQ *   A3 * /A2 *  A1 *</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+        p8_O22 *  A0</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+     + /A5* /A9* /A6 * /^N1 * /A7 * /^RD *   ^IORQ *   A3 *</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+       /A2 * /A1 * /p8_O22 * /A0</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+     +   A5* /A9*   A6 * /^N1 * /A7 * /^RD *   ^IORQ * /A3 *</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+         A2 *  A1 * /p8_O22 * /A0</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+     + /A5*   A9* /A6 * /^N1 *   A7 * /^RD *   ^IORQ *   A3 *</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+         A2 *  A1 * /p8_O22 * /A0</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+     + /A5* /A9* /A6 * /^N1 * /A7 * /^RD *   ^IORQ * /A3 *</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+       /A2 * /A1 * /p8_O22 *  A0</font></font></p>
+<p style="margin-bottom: 0in"><font color="#ff0000">Partial equation
+to IC8. Take this one a line at a time. </font>
+</p>
+<p style="margin-bottom: 0in"><font color="#ff0000">IOREQ to port 187
+OR</font></p>
+<p style="margin-bottom: 0in"><font color="#ff0000">Memory Read
+location 0x0008 (RST8)  OR</font></p>
+<p style="margin-bottom: 0in"><font color="#ff0000">Memory Read
+location 0x0066 (NMI code) OR</font></p>
+<p style="margin-bottom: 0in"><font color="#ff0000">Memory Read
+location 0x028E OR</font></p>
+<p style="margin-bottom: 0in"><font color="#ff0000">Memory Read
+location 0x0001 </font>
+</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+ O17.TRST = VCC</font></font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+/O17 =   A5*   A6 *  ^N1 * /A7 * /^IORQ *   A3 * /A2 *  A1 *</font></font></p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+        p8_O22 *  A0</font></font></p>
+<p style="margin-bottom: 0in"><font color="#ff0000">Partial equation
+to IC8.  IOREQ to port 0x7B (reset / set boot port)</font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+ O16.TRST = VCC</font></font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+/O16 = /A5*  ^N1 * /^IORQ *   A3 * /A2 *  A1 *  p8_O22 *  A0</font></font></p>
+<p style="margin-bottom: 0in"><font color="#ff0000">This is CE for
+IC4 WD1772 disk controller. Condition met when any IOREQ to ports
+(0x1B, 0x5B, 0xDB, 0x9B)</font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+ O15.TRST = VCC</font></font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><font face="Courier, monospace"><font size="2">
+/O15 = /A5* /A6 *  ^N1 * /A7 * /^WR * /^IORQ *   A3 *   A2 *</font></font></p>
+<p style="margin-bottom: 0in"><font size="2"><font face="Courier, monospace">
+        A1 *  p8_O22 *  A0</font></font></p>
+<p style="margin-bottom: 0in"><font color="#ff0000">This will
+generate a clock pulse for IC5 when data is written to the drive
+control IO port (0x31). IC5 seems to translate data on the data bus
+to the WD1772 IC.</font></p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<h2 style="page-break-before: always">Q6. Why did you do this you
+madman ?</h2>
+<p>Amazing what'll you'll do to get your beloved disciple working
+again after 10 years...... and my way of giving back to both the open
+source and Sinclair community, as well as helping to fix other broken
+beautiful disciple interfaces !</p>
+<p><br><br>
+</p>
+<h2>Q7. You're wrong about equation XYZ !</h2>
+<p>Tell me ! This is my interpretation and may well have errors. Let
+me know, I'll check and fix. Email me at <a href="mailto:alandpearson@yahoo.com">alandpearson@yahoo.com</a></p>
+<p><br><br>
+</p>
+<h2>Q8. I just want to program my PAL chips ! Can I have the jedec
+source files please ?</h2>
+<p>By all means, download <a href="https://k1.spdns.de/Vintage/Sinclair/82/Peripherals/Disc%20Interfaces/DiSCiPLE%20%26%20Plus%20D%20(MGT%2C%20Datel)/Technical%20stuff/PALs%20-%20DiSCIPLE%20%26%20MGT%20Plus%20D/palic8.jed">IC8</a> and
+<a href="https://k1.spdns.de/Vintage/Sinclair/82/Peripherals/Disc%20Interfaces/DiSCiPLE%20%26%20Plus%20D%20(MGT%2C%20Datel)/Technical%20stuff/PALs%20-%20DiSCIPLE%20%26%20MGT%20Plus%20D/palic9.jed">IC9</a>.</p>
+<p><br><br>
+</p>
+<h2>Q9. Okay what about the Plus D?</h2>
+<p>Hmm haven't got that far yet. The jedec source is <a href="https://k1.spdns.de/Vintage/Sinclair/82/Peripherals/Disc%20Interfaces/DiSCiPLE%20%26%20Plus%20D%20(MGT%2C%20Datel)/Technical%20stuff/PALs%20-%20DiSCIPLE%20%26%20MGT%20Plus%20D/alice4.jed">HERE</a>
+for the single PAL in it, but I haven't dissassmbled or figured out
+it's equations yet. Someday.</p>
+<p><br><br>
+</p>
+<h2>Q10. Gee Al, you are cool. How can I thank you ?</h2>
+<p>Thank Bruce Gordon for making such a wonderful interface, and Rudi
+Biesma for sending me the jedecs !</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<h2>Q22. And the disciple circuit diagram / schematic ?</h2>
+<p>Oh yeah, <a href="https://k1.spdns.de/Vintage/Sinclair/82/Peripherals/Disc%20Interfaces/DiSCiPLE%20%26%20Plus%20D%20(MGT%2C%20Datel)/Technical%20stuff/PALs%20-%20DiSCIPLE%20%26%20MGT%20Plus%20D/DiscipleInterface_Schematics.gif">here</a>
+ya go.</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p>Thanks to Rudy Biesma for supplying the disciple fuse maps, and
+Ian Worsley for the Plus D. Also thanks to <a href="http://www.ramsoft.bbk.org/"></a>Ramsoft for producing the
+disciple    technical guide, and the excellent realspec emulator.</p>
+<p><br><br>
+</p>
+<p>Alan Pearson, (<a href="mailto:alandpearson@yahoo.com">alandpearson@yahoo.com</a>)
+September 2003</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+<p style="margin-bottom: 0in"><br>
+</p>
+
+
+</body></html>

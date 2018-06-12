@@ -1,0 +1,306 @@
+((from the DOS Z80 emulator docs, i believe))
+
+2.11  Using the DISCiPLE and Plus D interfaces
+
+
+    For an explanation of the commands of the DISCiPLE and Plus D
+    interfaces, see the relevant sections in chapter 4.
+
+    The ROM of the DISCiPLE is supplied with the emulator, together with
+    two version of the D.O.S. pre-loaded in RAM.  The ROM of the Plus D
+    interface is not supplied, for copyright reasons.  The emulator will
+    only emulate a Plus D interface if it can find a file PLUSDROM.BIN in
+    the emulator's own directory.  If you have a Plus D yourself, you can
+    transfer the ROM in the following way.  Load the operating system from
+    a Plus D system diskette, and save the entire ROM, together with the
+    operating system, to disk by entering SAVE d1"rom" CODE 0,16384.  Then,
+    start the emulator and choose hardware mode Spectrum 48K + Disciple
+    (not Plus D of course), then type LOAD d1"rom" CODE 32768.  Finally,
+    press F10, X, S for Save Data block, set start address and length to
+    8000 and 4000 (hexadecimal) respectively, and save the ROM under the
+    name PLUSDROM.BIN.  If you re-start the emulator now, it will emulate
+    the Plus D too.
+
+    The emulation of the DISCiPLE or Plus D interfaces in turned on simply
+    by choosing the right hardware mode in the F9 menu.  Changing the
+    M.G.T. type will result in a Spectrum reset (unless you change with
+    CTRL-ENTER), since a different ROM is switched in.
+
+    By default, disks 1 and 2 refer to drives A: and B: respectively, but
+    this can be changed in the F8 menu.
+
+
+
+4.3  The DISCiPLE and Plus D Interfaces - Introduction
+
+
+    The DISCiPLE and Plus D were two disk interfaces for the spectrum
+    designed by M.G.T. (Miles Gordon Technology).  The first of these
+    interfaces was the DISCiPLE, this interface consisted of a disk
+    interface, microdrive network compatible interface, parallel printer
+    interface, 2 joystick ports (emulating kempston, cursor, and Sinclair 1
+    and 2).  The unit also had an inhibit button which disabled the
+    interface hardware (except the joystick ports), and finally a snapshot
+    button which when pressed stopped the computer to allow the program to
+    be saved to disk or the screen to be printed.  This was made by
+    Rockfort.
+
+    The Plus D was the second of the interfaces, this was a cut-down
+    version of the DISCiPLE, this interface only had a disk interface,
+    parallel printer interface and a snapshot button.
+
+    Both interfaces had a D.O.S. (Disk Operating System) which was partly
+    ROM (8K) and partly RAM (8K).  When the spectrum was turned on, the ROM
+    part of the D.O.S. was in control and whenever the command RUN was
+    issued the ROM tries to load up the RAM part of the D.O.S. from floppy
+    disk.  The advantage of this is that the D.O.S. can be upgraded without
+    having to change chips over (unless of course it was a major upgrade!).
+    Another advantage was that D.O.S. extensions could be incorporated or
+    replace other systems (see later).
+
+    With both interfaces, they extended the BASIC commands, but unlike the
+    microdrives and several other types of drives available, the DISCiPLE
+    and Plus D took up none of the spectrum's RAM, therefore it was the
+    most invisible of the disk systems available, not only that, but the
+    DISCiPLE and Plus D used the same type of disk drives as the BBC micro,
+    therefore disk drives were both cheap and widely available, also the
+    disks themselves were also standard, ie 5.25" (800K DS/DD), then later
+    3.5" (800K DS/DD).
+
+    The ROM of the DISCiPLE is supplied with the emulator, together with
+    two version of the D.O.S. pre-loaded in RAM.  The ROM of the Plus D
+    interface is not supplied, for copyright reasons.  The emulator will
+    only emulate a Plus D interface if it can find a file PLUSDROM.BIN in
+    the emulator's own directory.  If you have a Plus D yourself, you can
+    transfer the ROM in the following way.  Load the operating system from
+    a Plus D system diskette, and save the entire ROM, together with the
+    operating system, to disk by entering SAVE d1"rom" CODE 0,16384.  Then,
+    start the emulator and choose hardware mode Spectrum 48K + Disciple
+    (not Plus D of course), then type LOAD d1"rom" CODE 32768.  Finally,
+    press F10, X, S for Save Data block, set start address and length to
+    8000 and 4000 (hexadecimal) respectively, and save the ROM under the
+    name PLUSDROM.BIN.  If you re-start the emulator now, it will emulate
+    the Plus D too.
+
+
+
+
+4.4  The DISCiPLE and Plus D Interfaces - The basic commands
+
+
+    There are several levels of commands that can be used, these range from
+    the most straightforward everyday use, to the more advanced, programmer
+    type commands.
+
+    I will first explain the most common commands, so that you can quickly
+    and easily access DISCiPLE and Plus D disks.  Where a 1 is used in the
+    following commands 2 could be used instead.  These commands are:-
+
+     RUN -   when no D.O.S. (system file) is loaded it will cause this to
+             be loaded. Otherwise it will just run the BASIC PROGRAM.  Please
+             note that with the emulator the system file is already loaded,
+             therefore this command is not required, although I have
+             explained it for completeness.
+
+     CAT 1 - will display a longhand catalogue of the disk drive selected.
+             The form of this catalogue is as follows:-
+
+                    program no., program name, sectors used, file type,
+                    file size
+
+     CAT * - will display a longhand catalogue of the currently selected disk
+             drive in the same form as described above.
+
+     CAT 1! - displays a shorthand catalogue of the disk drive selected.
+              This catalogue consists of a 3 column list of the filename of
+              the programs.
+
+     CAT *! - displays a shorthand catalogue of the current disk drive.
+
+     LOAD pn - p - letter p, n - number between 1 & 80.  This is the program
+               number of the file on the disk, the program number is the
+               number printed before the name in the longhand catalogue.
+
+     LOAD d1"name" - load from drive 1 the program called name
+
+     LOAD d*"name" - load from the current drive the program called name
+
+     LOAD d1"name" S - load an 48K snapshot from drive 1 called name
+
+     LOAD d1"name" K - load an 128K snapshot from drive 1 called name
+
+     LOAD d1;a$ - load from drive 1 the program whose name is held in the
+                  string a$
+
+     LOAD d*;a$ - load from the current drive the program whose name is held
+                  in the string a$
+
+     FORMAT d1 -  format the disk in drive 1
+
+
+
+
+4.5  The DISCiPLE and Plus D Interfaces - More advanced commands
+
+
+    In the previous section I explained enough of the commands so that you
+    could get to use the floppy disks with DISCiPLE/Plus D software on. Now
+    I am going to explain the commands that the more experienced user and
+    those who want to do just a little bit more than just load the
+    programs.
+
+    First of all comes the simple commands of SAVE, MERGE, VERIFY and LOAD.
+    All of these commands are the same as rge tape versions except that you
+    have d1, d2 or d* after the LOAD, SAVE etc.  There are only two
+    exceptions to this rule, the first is when you have a string for the
+    filename, in this case the command becomes:-
+
+             LOAD d1;n$ ....... etc
+             LOAD d*;n$ ....... etc
+
+    The second exception is actually an extension.  When you save a code
+    block, you can actually get it to autorun when it is loaded by adding a
+    third parameter to the SAVE command, e.g. if you had a code block from
+    40000 to 45000 and the run address was 41023 and you wanted it to be
+    called testcode to drive 1, you would save it as:-
+
+             SAVE d1"testcode"CODE 40000,5001,41023
+
+    Now for the extensions.
+
+    Any sector on the disk may be loaded to any area of RAM from 16384 to
+    65535-512. The sector may also be loaded into the RAM of the interface,
+    however caution should be used at all times when doing this, as you may
+    destroy the operating system or cause it to behave irrationally.
+
+    The syntax of the command is:-
+
+             LOAD @n,tr,sec,add
+
+    Where:-
+
+             n   = drive number, ie 1 or 2, note * may not be used!
+             tr  = track number => 0->79=side 0, 128->207=side 1
+             sec = sector number => 1->10 normally, may not be 0!  If you
+                                    try and load a sector that is sector 0,
+                                    then the operating system will crash!
+
+    You may also save to disk in the same way, so if you wanted to write to
+    Track 5, Side 0, Sector 3 with code from 32768 to 33279 to drive 1 you
+    would type:-
+
+             SAVE @1,5,3,32768
+
+    To format a disk all you need to type is:-
+
+             FORMAT d1       or       FORMAT d2
+
+    This is not however as simple as it seems!  Although a disk formatted
+    on the DISCiPLE/Plus D will work with the PC it does not work the other
+    way round, i.e. a disk formatted on the PC with this emulator will not
+    necessarily work on the DISCiPLE/Plus D. This is because of differences
+    of the floppy disk controller chips.  With the PC, it puts a special
+    byte at the beginning of each track to tell the controller whether the
+    disk is Double Density or High Density, and the spectrum floppy disk
+    controller does not understand this byte and therefore will not read
+    the track!  If you find this otherwise, then please write and let us
+    know about it.
+
+    You can set some of the D.O.S. system variables using an extended POKE
+    command. The syntax is:-
+
+             POKE @address,value
+
+    The address is the BASE address of the system variables of the
+    interface concerned, the BASE address for each of the interfaces is
+    different, but the address you use in the POKE command is the same.
+
+
+
+
+4.6  The DISCiPLE and Plus D Interfaces - The snapshot button
+
+
+    The snapshot button is a button which is used to stop the processor
+    from executing instructions and making it do something else. In the
+    case of the DISCiPLE/PLUS D the button can do 5 different tasks
+    initially. Later on I'll discuss how the fuctions can be altered so
+    that it can do other tasks. Once these tasks are carried out, the
+    processor is returned to it's original state and the program continues
+    from where it left off from.
+
+    There are 5 functions that can be carried out with the initial system
+    file.
+
+    To use the button, first you must get to a point in the program that
+    you want to use the button at, then press the button on the emulator
+    the snapshot button is F5 (NMI).  Once you do this the program will
+    stop and the border of the computer will flash, this may also be
+    accompanied with a buzzing noise on the speaker.  This is to tell you
+    that the snapshot button has been activated.  The following functions
+    can then be carried out:-
+
+        1   - Print screen to printer in black/white screen size
+        2   - Print screen to printer in grey scale A4 size
+        3   - Snapshot screen to disk in SCREEN$ format
+        4   - Snapshot program to disk in 48K SNAP format
+        5   - Snapshot program to disk in 128K SNAP format
+      SPACE - go back to program (ie if F5 was pressed by mistake)
+
+    The printer options will print out to EPSON compatible printers,
+    however the DISCiPLE code has been changed and it is now possible to
+    print to HPGL printers (e.g. Deskjet and Laserjet printers).
+
+    The Snapshot screen and snapshot 48K are very self explanatory and easy
+    to use.
+
+    The Snapshot 128K is slightly more complicated.  Once you select this
+    option the disk drive will start up then after a slight pause the
+    screen display may/may not change.  The border flashes again and you
+    have to press y or n depending on whether the screen display changed or
+    not.  If the screen stayed the same then press n, but if the screen
+    changed type y.  This is because the 128K spectrum has 2 screens, and
+    there is no way for the computer to determine which is being used by
+    itself, therefore it needs the user's help.  After you press y or n the
+    program will be saved onto disk.
+
+    Seeing it is possible for you to load programs into the DISCiPLE/PLUS D
+    RAM area it is possible to have these interfaces carry out other tasks.
+    The snapshot button code is located in RAM, so you can therefore load a
+    program into this part of the RAM and as soon as you press the snapshot
+    button it will execute the new program.  There is one problem however,
+    which is that the program must be written in assembly language and must
+    also be compiled for running in that part of RAM, also it must take
+    care of what it does because the SPECTRUM ROM is not paged in,
+    therefore ROM calls are not easily carried out.
+
+    There are several different commercial programs which use the snapshot
+    button to carry out different tasks, some of these are:-
+
+                        Snapshot compressing programs
+                        Debugging tools
+                        Cheat finders for games
+                        Programs to allow snapshots back onto tape
+
+    The list is endless, and if you are capable of writing a machine-code
+    program and have the relevant information, then you too could write
+    your own programs.
+
+
+
+
+5. Printing with DISCiPLE and Plus D
+
+    If, emulating a DISCiPLE/+D and by entering POKE @11,0 the parallel
+    printer output has been selected, going back to a hardware mode without
+    M.G.T. interface causes problems with printing to the ZX Printer, since
+    the output addresses of the "p" channel have been changed by the M.G.T.
+    ROM.  Use the "b" channel of the Interface I instead.  You can reset
+    the channel to the ZX Printer by entering POKE @11,1 while still
+    emulating the M.G.T. interface.
+
+    Although by default channel #3 prints to the ZX Printer, in all
+    hardware modes, if a DISCiPLE/+D is emulated output to the ZX Printer
+    is ignored, as these interfaces use the ZX Printer I/O ports for their
+    own purposes.
+
