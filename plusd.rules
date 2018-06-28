@@ -11,18 +11,18 @@
     (via_costs 50)
     (plane_via_costs 5)
     (start_ripup_costs 100)
-    (start_pass_no 3317)
+    (start_pass_no 3503)
     (layer_rule F.Cu
       (active on)
       (preferred_direction horizontal)
       (preferred_direction_trace_costs 1.0)
-      (against_preferred_direction_trace_costs 2.1)
+      (against_preferred_direction_trace_costs 2.0)
     )
     (layer_rule B.Cu
       (active on)
       (preferred_direction vertical)
       (preferred_direction_trace_costs 1.0)
-      (against_preferred_direction_trace_costs 1.9)
+      (against_preferred_direction_trace_costs 2.0)
     )
   )
   (rule
@@ -46,11 +46,17 @@
   (via 
     "Via[0-1]_800:400_um-kicad_default" "Via[0-1]_800:400_um" "kicad_default"
   )
+  (via 
+    "Via[0-1]_800:400_um-power" "Via[0-1]_800:400_um" power
+  )
   (via_rule
     default "Via[0-1]_800:400_um"
   )
   (via_rule
     "kicad_default" "Via[0-1]_800:400_um-kicad_default"
+  )
+  (via_rule
+    power "Via[0-1]_800:400_um-power"
   )
   (class default
     (clearance_class default)
@@ -63,22 +69,33 @@
     )
   )
   (class "kicad_default"
-    "Net-(C1-Pad1)" "Net-(C1-Pad2)" "Net-(C2-Pad2)" "Net-(C2-Pad1)" GND /RESET "Net-(C4-Pad2)" +9V
-    +5V "Net-(D2-Pad1)" "Net-(D2-Pad2)" "Net-(J1-Pad8)" /DS0 /DS1 "Net-(J1-Pad16)" "Net-(J1-Pad18)"
-    "Net-(J1-Pad20)" "Net-(J1-Pad22)" "Net-(J1-Pad24)" "Net-(J1-Pad26)" "Net-(J1-Pad28)" "Net-(J1-Pad30)" /XXX /A11
-    /A9 /A4 /A5 /A6 /A7 /A10 /A8 /M1
-    /WR /A3 /A2 /A1 /A0 /A12 /A14 /RD
-    /IOREQ /MREQ NMI /D4 /D3 /D5 /D6 /D2
-    /D1 /D0 /D7 /A13 /A15 "Net-(J3-Pad1)" "Net-(J3-Pad3)" "Net-(J3-Pad5)"
-    "Net-(J3-Pad7)" "Net-(J3-Pad9)" "Net-(J3-Pad11)" "Net-(J3-Pad13)" "Net-(J3-Pad15)" "Net-(J3-Pad17)" "Net-(J3-Pad21)" "Net-(R6-Pad1)"
-    "Net-(R8-Pad2)" "Net-(U1-Pad1)" "Net-(U1-Pad9)" "Net-(U1-Pad3)" "Net-(U1-Pad11)" "Net-(U1-Pad5)" "Net-(U1-Pad13)" "ROM_CS"
-    "FDC_CS" "Net-(U10-Pad12)" "Net-(U10-Pad8)" "Net-(U10-Pad5)" "PRN_STR" "Net-(U4-Pad8)" "Net-(U5-Pad2)" "Net-(U5-Pad9)"
-    "Net-(U5-Pad12)" "DSK_CS" "RAM_CS" "PRN_CS" "ZX_ROMOE1" "Net-(D1-Pad2)" "ZX_ROMOE2" "Net-(D4-Pad2)"
-    "ZX_ROMOE48" "ROM_A14" "ROM_A13"
+    "Net-(C1-Pad2)" GND /RESET +9V +5V "Net-(D2-Pad2)" /A11 /A9
+    /A4 /A6 /A7 /A10 /A8 /M1 /WR /A3
+    /A2 /A1 /A0 /A12 /A14 /MREQ NMI /A13
+    /A15 "Net-(U1-Pad5)" "FDC_CS" "PRN_STR" "DSK_CS" "PRN_CS" "ZX_ROMOE1" "ZX_ROMOE2"
+    "Net-(D4-Pad2)" "ZX_ROMOE48" "ROM_A14" "ROM_A13" "Net-(J5-Pad1)" "Net-(J5-Pad3)" "Net-(J5-Pad4)" "Net-(J5-Pad7)"
+    "Net-(J5-Pad8)" "Net-(J5-Pad9)" "Net-(J5-Pad11)" "plus3_5V" "Net-(C15-Pad1)" "Net-(C15-Pad2)" "Net-(C17-Pad1)" "Net-(C17-Pad2)"
+    "Net-(J4-Pad8)" "Net-(J4-Pad16)" "Net-(J4-Pad18)" "Net-(J4-Pad20)" "Net-(J4-Pad22)" "Net-(J4-Pad24)" "Net-(J4-Pad26)" "Net-(J4-Pad28)"
+    "Net-(J4-Pad30)" "J1-Up" "J2-Down" "J3-Left" "J4-Right" "J6-Fire" "Net-(R1-Pad2)" "Net-(R10-Pad1)"
+    "Net-(U1-Pad8)" "Net-(U1-Pad12)" "Net-(U7-Pad16)" "Net-(U7-Pad17)" "Net-(U7-Pad20)" "Net-(U7-Pad21)" "Net-(U7-Pad22)" "Net-(U8-Pad10)"
+    /A5 /RD /IOREQ /D4 /D3 /D5 /D6 /D2
+    /D1 /D0 /D7 /DS0 /DS1 /XXX "Net-(J5-Pad2)" "Net-(J5-Pad5)"
+    "Net-(J5-Pad6)" "RAM_CS" "ROM_CS" "Net-(U11-Pad4)" "Net-(U11-Pad2)" "Net-(U11-Pad9)" "Net-(U11-Pad12)" "Net-(J2-Pad1)"
+    "Net-(JP1-Pad2)" "Net-(D1-Pad2)" "Net-(D1-Pad1)" "Net-(D5-Pad2)"
     (clearance_class "kicad_default")
     (via_rule kicad_default)
     (rule
       (width 250.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+  (class power
+    (clearance_class power)
+    (via_rule power)
+    (rule
+      (width 350.0)
     )
     (circuit 
       (use_layer F.Cu B.Cu)

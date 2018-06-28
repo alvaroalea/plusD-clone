@@ -4,13 +4,13 @@
     (board_frame
       visible
       (bounds
-        120 28 1152 712
+        0 27 1920 1053
       )
     )
     (color_manager
       not_visible
       (bounds
-        0 600 1112 133
+        0 600 1120 134
       )
     )
     (layer_visibility
@@ -22,7 +22,7 @@
     (object_visibility
       not_visible
       (bounds
-        0 345 397 395
+        0 345 405 396
       )
     )
     (display_miscellanious
@@ -38,7 +38,7 @@
       )
     )
     (select_parameter
-      visible
+      not_visible
       (bounds
         0 28 238 466
       )
@@ -70,7 +70,7 @@
     (clearance_matrix
       not_visible
       (bounds
-        0 150 570 273
+        205 189 570 273
       )
     )
     (via_rules
@@ -88,7 +88,7 @@
     (edit_net_rules
       not_visible
       (bounds
-        100 200 913 119
+        100 200 913 151
       )
     )
     (assign_net_rules
