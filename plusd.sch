@@ -1336,8 +1336,6 @@ $EndComp
 Wire Wire Line
 	10450 4800 10750 4800
 Wire Wire Line
-	10750 4800 10750 2650
-Wire Wire Line
 	10750 1950 11100 1950
 $Comp
 L Device:R R9
@@ -3160,8 +3158,6 @@ Text Label 10900 2350 0    50   ~ 0
 STEP
 Text Label 10750 2650 0    50   ~ 0
 TRACK_0
-Wire Wire Line
-	10750 2650 10750 1950
 Text Notes 11650 2050 0    50   ~ 0
 DS0\n
 Text Notes 11650 1950 0    50   ~ 0
@@ -3222,7 +3218,6 @@ Wire Wire Line
 	10450 950  10450 650 
 Wire Wire Line
 	10050 650  10450 650 
-Connection ~ 10750 2650
 Wire Wire Line
 	10750 2650 11100 2650
 $Comp
@@ -3265,4 +3260,6 @@ Wire Bus Line
 	3500 850  3500 4550
 Wire Bus Line
 	5950 850  5950 5900
+Wire Wire Line
+	10750 1950 10750 4800
 $EndSCHEMATC
