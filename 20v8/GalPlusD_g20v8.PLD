@@ -1,0 +1,65 @@
+Name     Alice chip of PlusD ;
+PartNo   00 ;
+Date     13/01/2017 ;
+Revision 01 ;
+Designer Alvaro ;
+Company  None ;
+Assembly None ;
+Location  ;
+Device   g20v8 ;
+
+/* *************** INPUT PINS ******************** */
+PIN  1   = A14                   ; /*                                 */ 
+PIN  2   = A15                   ; /*                                 */ 
+PIN  3   = A14                   ; /*                                 */ 
+PIN  4   = MREQ                  ; /*                                 */ 
+PIN  5   = IOREQ                 ; /*                                 */ 
+PIN  6   = RD                    ; /*                                 */ 
+PIN  7   = WR                    ; /*                                 */ 
+PIN  8   = A6                    ; /*                                 */ 
+PIN  9   = A5                    ; /*                                 */ 
+PIN  10  = A4                    ; /*                                 */ 
+PIN  11  = A3                    ; /*                                 */ 
+PIN  13  = A1                    ; /*                                 */ 
+PIN  14  = A2                    ; /*                                 */ 
+PIN  23  = DIR_DEC               ; /*                                 */ 
+
+/* *************** OUTPUT PINS ******************** */
+PIN  15   = ROM_CS                        ; /*                                 */ 	   		
+PIN  16   = RAM_CS                        ; /*                                 */ 
+PIN  18   = PRN_CS                        ; /*                                 */ 
+PIN  19   = DSK_CS                        ; /*                                 */ 
+PIN  20   = PRN_STR                       ; /*                                 */ 
+PIN  21   = ROM_OE                        ; /*                                 */ 
+PIN  22   = FDC_CS                        ; /*                                 */ 
+
+/*
+chip plusd-PAL16L6 GAL20v8
+
+i1=1 i2=2 i3=3 i4=4 i5=5 i6=6 i7=7 i8=8 i9=9 i10=10 i11=11 
+i13=13 i14=14 i15=15
+i22=22 i23=23
+GND=12 
+ o16=16 o17=17 o18=18 o19=19 o20=20 o21=21  
+VCC=24 
+
+equations
+
+/o21 ROM_OE= i23 DIR_DEC* /i22 FDC_CS* i4 MREQ* i5 IOREQ* i6 * i7 * /i8 * i9 * i10
+
+/o20 PRN_STR= i23 DIR_DEC* /i22 * i4  * i5 * i6 * /i7 * /i8 * i9 * i10
+	+
+       /i23 * i22 * /i1 * /i2 * /i3 * /i4 * /i5 * /i6 * /i7 * i8 * /i9 * /i10 * /i11 * /i15 * i14 
+	+
+       /i23 * i22 * /i1 * /i2 * /i3 * /i4 * /i5 * i6 * i7 * i8 * /i9 * i10 * /i11 */i15 * i14
+	+
+       /i23 * i22 * /i1 * /i2 * /i3 * /i4 * i5 * i6 * /i7 * /i8 * i9 * i10 * /i11 * /i15 * i14
+
+/o19 DSK_CS= i23 DIR_DEC* /i22 * i4  * i5 * i6 * /i7 * i8 * i9 * i10
+
+/o18 PRN_CS= /i23 DIR_DEC* i22 * /i1 * /i2 * /i15 * i13
+
+/o17 = i23 * /i22 * i4  * i5 * i6 * /i9 * i10 
+
+/o16 RAM_CS= /i23 DIR_DEC* i22 * /i1 * /i2 * i15 * i13
+*/

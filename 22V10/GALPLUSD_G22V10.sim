@@ -1,0 +1,100 @@
+%SIGNAL
+PIN   4 =  A3 
+PIN   3 =  A4 
+PIN   1 =  A5 
+PIN  23 =  D0 
+PIN  22 =  D1 
+PIN  21 =  D2 
+PIN  20 =  D3 
+PIN  19 =  D4 
+PIN  18 =  D5 
+PIN  17 =  D6 
+PIN  16 =  D7 
+PIN   7 =  FDC_CS 
+PIN   5 =  IOREQ 
+PIN  11 =  J_Down 
+PIN  13 =  J_Fire 
+PIN   8 =  J_Left 
+PIN   9 =  J_Right 
+PIN  10 =  J_Up 
+PIN  14 =  MOTOR 
+PIN   6 =  RD 
+PIN   2 =  WR 
+%END
+
+%FIELD
+%END
+
+%EQUATION
+Control_Reg_Access =>
+    A3
+  # A4
+  # WR
+  # FDC_CS
+
+D0 =>
+    !A5 & !IOREQ & !J_Right & !RD
+
+D0.oe  =>
+    !A5 & !IOREQ & !RD
+
+D1 =>
+    !A5 & !IOREQ & !J_Left & !RD
+
+D1.oe  =>
+    !A5 & !IOREQ & !RD
+
+D2 =>
+    !A5 & !IOREQ & !J_Down & !RD
+
+D2.oe  =>
+    !A5 & !IOREQ & !RD
+
+D3 =>
+    !A5 & !IOREQ & !J_Up & !RD
+
+D3.oe  =>
+    !A5 & !IOREQ & !RD
+
+D4 =>
+    !A5 & !IOREQ & !J_Fire & !RD
+
+D4.oe  =>
+    !A5 & !IOREQ & !RD
+
+D5 =>
+    0 
+
+D5.oe  =>
+    !A5 & !IOREQ & !RD
+
+D6 =>
+    0 
+
+D6.oe  =>
+    !A5 & !IOREQ & !RD
+
+D7 =>
+    0 
+
+D7.oe  =>
+    !A5 & !IOREQ & !RD
+
+Kempston =>
+    IOREQ
+  # RD
+  # A5
+
+MOTOR.d  =>
+    D3
+
+MOTOR.ck  =>
+    !A3 & !A4 & !FDC_CS & !WR
+
+MOTOR.oe  =>
+    1 
+
+MOTOR.sp  =>
+    0 
+
+%END

@@ -1,0 +1,213 @@
+{COMPONENT C:\DOCUMENTS AND SETTINGS\COVA\ESCRITORIO\GALPLUSD_G22V10.SYM
+
+ {ENVIRONMENT
+  {PDIFvrev 3.00}
+  {Program "CUPL(WM) Version 5.0a"}
+  {DBtype "Schematic"}
+  {DBvrev 1.01}
+  {DBtime "Sat Jun 30 00:24:42 2018 "}
+  {DBunit "MIL"}
+  {DBgrid 10}
+  {Lyrstr "WIRES" 1 "BUS" 1 "GATE" 2 "IEEE" 2 "PINFUN" 3 "PINNUM" 1 
+          "PINNAM" 6 "PINCON" 4 "REFDES" 2 "ATTR" 6 "SDOT" 1 
+          "DEVICE" 5 "OUTLIN" 5 "ATTR2" 6 "NOTES" 6 "NETNAM" 4 
+          "CMPNAM" 5 "BORDER" 5}
+ }
+
+ {USER
+  {VIEW
+   {Mode SYMB}
+   {Nlst OPEN}
+   {Vw 0 0 2}
+   {Lv 12 2 2 2 0 0 2 2 2 2 0 0 2 1 2 0 0 0 0}
+   {Gs 10 10}
+  }
+ }
+
+ {DISPLAY
+  [Ly "PINNUM"]
+  [Ls "SOLID"][Wd 0]
+  [Ts 15][Tj "LC"][Tr 0][Tm "N"]
+ }
+
+ {SYMBOL
+  {PIN_DEF
+   [Ly "PINCON"]
+   {P A5 {Pt "INPUT"}{Lq 0}{Ploc 100 260}}
+   {P WR {Pt "INPUT"}{Lq 0}{Ploc 100 220}}
+   {P A4 {Pt "INPUT"}{Lq 0}{Ploc 100 200}}
+   {P A3 {Pt "INPUT"}{Lq 0}{Ploc 100 180}}
+   {P IOREQ {Pt "INPUT"}{Lq 0}{Ploc 100 160}}
+   {P RD {Pt "INPUT"}{Lq 0}{Ploc 100 140}}
+   {P FDC_CS {Pt "INPUT"}{Lq 0}{Ploc 100 120}}
+   {P J_LEFT {Pt "INPUT"}{Lq 0}{Ploc 100 100}}
+   {P J_RIGHT {Pt "INPUT"}{Lq 0}{Ploc 100 80}}
+   {P J_UP {Pt "INPUT"}{Lq 0}{Ploc 100 60}}
+   {P J_DOWN {Pt "INPUT"}{Lq 0}{Ploc 100 40}}
+   {P J_FIRE {Pt "INPUT"}{Lq 0}{Ploc 100 20}}
+   {P D7 {Pt "I/O"}{Lq 0}{Ploc 320 20}}
+   {P D6 {Pt "I/O"}{Lq 0}{Ploc 320 40}}
+   {P D5 {Pt "I/O"}{Lq 0}{Ploc 320 60}}
+   {P D4 {Pt "I/O"}{Lq 0}{Ploc 320 80}}
+   {P D3 {Pt "I/O"}{Lq 0}{Ploc 320 100}}
+   {P D2 {Pt "I/O"}{Lq 0}{Ploc 320 120}}
+   {P D1 {Pt "I/O"}{Lq 0}{Ploc 320 140}}
+   {P D0 {Pt "I/O"}{Lq 0}{Ploc 320 160}}
+   {P MOTOR {Pt "OUTPUT"}{Lq 0}{Ploc 320 180}}
+  }
+
+  {PKG
+   [Ly "REFDES"]
+   [Ts 25][Tj "CB"][Tr 0][Tm "N"]
+   {Rdl 210 290}
+
+   [Ly "PINNUM"]
+   [Ts 15][Tj "RC"]
+   {Pnl 120 270}
+   [Ts 15][Tj "RC"]
+   {Pnl 120 230}
+   {Pnl 120 210}
+   {Pnl 120 190}
+   {Pnl 120 170}
+   {Pnl 120 150}
+   {Pnl 120 130}
+   {Pnl 120 110}
+   {Pnl 120 90}
+   {Pnl 120 70}
+   {Pnl 120 50}
+   {Pnl 120 30}
+   [Ts 15][Tj "LC"]
+   {Pnl 300 30}
+   {Pnl 300 50}
+   {Pnl 300 70}
+   {Pnl 300 90}
+   {Pnl 300 110}
+   {Pnl 300 130}
+   {Pnl 300 150}
+   {Pnl 300 170}
+   {Pnl 300 190}
+
+   {Sd A 1 2 3 4 5 6 7 8 9 10 11 13 16 17 18 19 20 21 22 23 14}
+  }
+
+  {PIC
+   [Ly "GATE"]
+   [Ts 15][Tj "LC"][Tr 0][Tm "N"]
+   {R 130 280 290 0}
+   {L 130 260 100 260}
+   {L 130 270 140 260 130 250}
+   {L 130 220 100 220}
+   {L 130 200 100 200}
+   {L 130 180 100 180}
+   {L 130 160 100 160}
+   {L 130 140 100 140}
+   {L 130 120 100 120}
+   {L 130 100 100 100}
+   {L 130 80 100 80}
+   {L 130 60 100 60}
+   {L 130 40 100 40}
+   {L 130 20 100 20}
+   {L 290 20 320 20}
+   {L 290 40 320 40}
+   {L 290 60 320 60}
+   {L 290 80 320 80}
+   {L 290 100 320 100}
+   {L 290 120 320 120}
+   {L 290 140 320 140}
+   {L 290 160 320 160}
+   {L 290 180 320 180}
+   [Ly "PINNAM"]
+   [Tj "LC"]
+   {T "A5" 140 260}
+   {T "WR" 140 220}
+   {T "A4" 140 200}
+   {T "A3" 140 180}
+   {T "IOREQ" 140 160}
+   {T "RD" 140 140}
+   {T "FDC_CS" 140 120}
+   {T "J_LEFT" 140 100}
+   {T "J_RIGHT" 140 80}
+   {T "J_UP" 140 60}
+   {T "J_DOWN" 140 40}
+   {T "J_FIRE" 140 20}
+   [Tj "RC"]
+   {T "D7" 280 20}
+   {T "D6" 280 40}
+   {T "D5" 280 60}
+   {T "D4" 280 80}
+   {T "D3" 280 100}
+   {T "D2" 280 120}
+   {T "D1" 280 140}
+   {T "D0" 280 160}
+   {T "MOTOR" 280 180}
+   [Ly "DEVICE"]
+   [Tj "CT"]
+   {T "V750C" 210 -10}
+  }
+
+  {ATR
+   {IN
+    {Org 100 20}
+    {Ty 255}
+   }
+   {EX
+    [Ly "ATTR2"]
+    [Ts 12][Tj "CT"][Tr 0][Tm "N"]
+    {At PLD C:\DOCUMENTS AND SETTINGS\COVA\ESCRITORIO\GALPLUSD_G22V10 210 280}
+   }
+  }
+ }
+
+ {DETAIL
+  {ANNOTATE
+  }
+
+  {NET_DEF
+   {N A5
+   }
+   {N WR
+   }
+   {N A4
+   }
+   {N A3
+   }
+   {N IOREQ
+   }
+   {N RD
+   }
+   {N FDC_CS
+   }
+   {N J_LEFT
+   }
+   {N J_RIGHT
+   }
+   {N J_UP
+   }
+   {N J_DOWN
+   }
+   {N J_FIRE
+   }
+   {N D7
+   }
+   {N D6
+   }
+   {N D5
+   }
+   {N D4
+   }
+   {N D3
+   }
+   {N D2
+   }
+   {N D1
+   }
+   {N D0
+   }
+   {N MOTOR
+   }
+  }
+
+  {SUBCOMP
+  }
+ }
+}
