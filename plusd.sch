@@ -292,7 +292,7 @@ Wire Wire Line
 NoConn ~ 12100 1450
 NoConn ~ 12100 1550
 NoConn ~ 12100 1650
-Text Label 10650 3200 1    50   ~ 0
+Text Label 10650 3100 1    50   ~ 0
 DS0
 Text Label 11900 1950 0    50   ~ 0
 DS1
@@ -966,7 +966,7 @@ Wire Wire Line
 Wire Wire Line
 	10850 5250 10150 5250
 Wire Wire Line
-	10650 1400 10650 4400
+	10650 1400 10650 3150
 Wire Wire Line
 	10150 4400 10650 4400
 Wire Wire Line
@@ -3159,8 +3159,6 @@ $EndComp
 Wire Wire Line
 	8700 950  8700 900 
 Wire Wire Line
-	10750 1950 10750 4800
-Wire Wire Line
 	8950 2650 12100 2650
 Wire Wire Line
 	9000 2750 12100 2750
@@ -3283,20 +3281,56 @@ Wire Wire Line
 	9800 4700 9850 4700
 Wire Wire Line
 	9800 5550 9850 5550
+$Comp
+L Connector_Generic:Conn_02x02_Odd_Even JP7
+U 1 1 5B5832CA
+P 10750 3500
+F 0 "JP7" V 10754 3580 50  0000 L CNN
+F 1 "Conn_02x02_Odd_Even" V 10845 3580 50  0000 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical" H 10750 3500 50  0001 C CNN
+F 3 "~" H 10750 3500 50  0001 C CNN
+	1    10750 3500
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	10650 4000 10450 4000
+Wire Wire Line
+	10450 4000 10450 3250
+Wire Wire Line
+	10450 3250 10650 3250
+Wire Wire Line
+	10650 3250 10650 3300
+Wire Wire Line
+	10650 4000 10650 4400
+Wire Wire Line
+	10650 3900 10650 3800
+Wire Wire Line
+	10650 3150 10350 3150
+Wire Wire Line
+	10350 3150 10350 3900
+Wire Wire Line
+	10350 3900 10650 3900
+Wire Wire Line
+	10750 1950 10750 3300
+Wire Wire Line
+	10750 3800 10750 4800
+Text Notes 10900 3850 0    50   ~ 0
+normal:   1 y 2, 3 y 4, - DS0 es DS0  y DS1 es DS1\ninvertido: 1 y 3, 2 y 4  - DS0 es DS1  DS1 es DS0
+NoConn ~ 11700 9550
 Wire Bus Line
 	850  2350 850  4550
 Wire Bus Line
 	13600 550  13600 2400
 Wire Bus Line
-	8050 5900 8050 7400
-Wire Bus Line
 	15800 550  15800 2600
+Wire Bus Line
+	8050 5900 8050 7400
 Wire Bus Line
 	3500 4550 3500 6200
 Wire Bus Line
 	850  4550 850  6500
 Wire Bus Line
-	3500 550  3500 4550
-Wire Bus Line
 	5950 550  5950 5900
+Wire Bus Line
+	3500 550  3500 4550
 $EndSCHEMATC
