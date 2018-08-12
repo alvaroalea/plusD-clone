@@ -1,4 +1,5 @@
 EESchema Schematic File Version 4
+LIBS:plusd-cache
 EELAYER 26 0
 EELAYER END
 $Descr A3 16535 11693
@@ -770,7 +771,6 @@ Entry Wire Line
 	3500 5600 3600 5500
 Entry Wire Line
 	3500 5700 3600 5600
-Connection ~ 3500 4550
 Wire Wire Line
 	3600 6000 4650 6000
 Text Label 4400 6000 0    50   ~ 0
@@ -1529,8 +1529,6 @@ Wire Wire Line
 	950  6400 1650 6400
 Text Label 1300 6400 0    50   ~ 0
 A2
-Wire Bus Line
-	850  4550 3500 4550
 $Comp
 L power:+5V #PWR05
 U 1 1 5BDE9C3C
@@ -1568,7 +1566,6 @@ Wire Wire Line
 	2650 5900 2700 5900
 Connection ~ 6450 10750
 Connection ~ 6450 11050
-Connection ~ 850  4550
 $Comp
 L plusd-rescue:74LS374-Logic_74xx U10
 U 1 1 5B1D5091
@@ -3089,10 +3086,6 @@ Wire Bus Line
 Connection ~ 5950 5900
 Entry Wire Line
 	5950 6300 6050 6400
-NoConn ~ 12900 6350
-NoConn ~ 12900 6250
-NoConn ~ 12900 6150
-NoConn ~ 12900 6050
 Wire Wire Line
 	12900 7150 13050 7150
 $Comp
@@ -3123,7 +3116,6 @@ Wire Wire Line
 	9800 4700 9850 4700
 Wire Wire Line
 	9800 5550 9850 5550
-NoConn ~ 12900 7250
 Wire Wire Line
 	8750 6050 12400 6050
 Wire Wire Line
@@ -3139,8 +3131,24 @@ Wire Wire Line
 NoConn ~ 12100 2050
 Wire Wire Line
 	10750 1950 10750 4800
+Wire Wire Line
+	10650 1850 10650 4400
+Wire Wire Line
+	12900 6050 12900 6150
+Wire Wire Line
+	12900 6150 12900 6250
+Connection ~ 12900 6150
+Wire Wire Line
+	12900 6250 12900 6350
+Connection ~ 12900 6250
+Wire Wire Line
+	12900 6350 12900 6450
+Connection ~ 12900 6350
+Connection ~ 12900 6450
+Wire Wire Line
+	12900 7150 12900 7250
 Wire Bus Line
-	850  2350 850  4550
+	3500 550  850  550 
 Wire Bus Line
 	13600 550  13600 2400
 Wire Bus Line
@@ -3148,13 +3156,10 @@ Wire Bus Line
 Wire Bus Line
 	8050 5900 8050 7400
 Wire Bus Line
-	3500 4550 3500 6200
-Wire Bus Line
-	850  4550 850  6500
-Wire Bus Line
 	5950 550  5950 5900
+Connection ~ 3500 550 
 Wire Bus Line
-	3500 550  3500 4550
-Wire Wire Line
-	10650 1850 10650 4400
+	850  550  850  6500
+Wire Bus Line
+	3500 550  3500 6200
 $EndSCHEMATC
