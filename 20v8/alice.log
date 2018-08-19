@@ -1,0 +1,82 @@
+EQN2JED - Boolean Equations to JEDEC file assembler (Version V101)
+Copyright (c) National Semiconductor Corporation 1990-1993
+
+Log file for alice.eqn
+Device: 20L8
+
+Pin   Label               Type
+---   -----               ----
+1     i1                  pos,com input
+2     i2                  pos,com input
+3     i3                  pos,com input
+4     i4                  pos,com input
+5     i5                  pos,com input
+6     i6                  pos,com input
+7     i7                  pos,com input
+8     i8                  pos,com input
+9     i9                  pos,com input
+10    i10                 pos,com input
+11    i11                 pos,com input
+12    GND                 ground pin
+13    i13                 pos,com input
+14    i14                 pos,com input
+15    o15                 neg,com output
+16    o16                 neg,com output
+17    f17                 neg,com feedback
+18    o18                 neg,com output
+19    o19                 neg,com output
+20    o20                 neg,com output
+21    f21                 neg,com feedback
+22    o22                 neg,com output
+23    i23                 pos,com input
+24    VCC                 power pin
+
+EQN2JED - Boolean Equations to JEDEC file assembler (Version V101)
+Copyright (c) National Semiconductor Corporation 1990-1993
+
+Device Utilization:
+
+No of dedicated inputs used               : 14/14 (100.0%)
+No of dedicated outputs used              :  2/2  (100.0%)
+No of feedbacks used as dedicated outputs :  4/6  (66.7%)
+No of feedbacks used                      :  2/6  (33.3%)
+
+		------------------------------------------
+		Pin   Label                 Terms Usage
+		------------------------------------------
+		22    o22.oe                1/1   (100.0%)
+		22    o22                   1/7   (14.3%)
+		21    f21.oe                1/1   (100.0%)
+		21    f21                   1/7   (14.3%)
+		20    o20.oe                1/1   (100.0%)
+		19    o19.oe                1/1   (100.0%)
+		18    o18.oe                1/1   (100.0%)
+		17    f17.oe                1/1   (100.0%)
+		17    f17                   4/7   (57.1%)
+		16    o16.oe                1/1   (100.0%)
+		16    o16                   1/7   (14.3%)
+		15    o15.oe                1/1   (100.0%)
+		------------------------------------------
+		Total Terms                23/64  (35.9%)
+		------------------------------------------
+
+EQN2JED - Boolean Equations to JEDEC file assembler (Version V101)
+Copyright (c) National Semiconductor Corporation 1990-1993
+
+                            Chip diagram (DIP)
+
+                             ._____    _____.
+                             |     \__/     |
+                          i1 |  1        24 | VCC
+                          i2 |  2        23 | i23
+                          i3 |  3        22 | o22
+                          i4 |  4        21 | f21
+                          i5 |  5        20 | o20
+                          i6 |  6        19 | o19
+                          i7 |  7        18 | o18
+                          i8 |  8        17 | f17
+                          i9 |  9        16 | o16
+                         i10 | 10        15 | o15
+                         i11 | 11        14 | i14
+                         GND | 12        13 | i13
+                             |______________|
