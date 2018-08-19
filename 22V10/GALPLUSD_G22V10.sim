@@ -86,15 +86,26 @@ Kempston =>
   # A5
 
 MOTOR.d  =>
-    D3
+    !A3 & !A4 & D3 & !FDC_CS & MOTOR & !WR
+  # !MOTOR & WR
+  # D3 & !MOTOR
+  # A3 & !MOTOR
+  # A4 & !MOTOR
+  # FDC_CS & !MOTOR
 
-MOTOR.ck  =>
-    !A3 & !A4 & !FDC_CS & !WR
+MOTOR.ar  =>
+    0 
 
 MOTOR.oe  =>
     1 
 
 MOTOR.sp  =>
     0 
+
+Reset_Motor =>
+    !A3 & !A4 & !D3 & !FDC_CS & !WR
+
+Set_Motor =>
+    !A3 & !A4 & D3 & !FDC_CS & !WR
 
 %END
