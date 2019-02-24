@@ -2,7 +2,7 @@
 /* ESTO AUN NO FUNCIONA ES SOLO UN BORRADOR */
 Name     Alice;
 PartNo   00 ;
-Date     13/06/2018 ;
+Date     20/08/2018 ;
 Revision 01 ;
 Designer Alvaro ;
 Company  None ;
@@ -11,69 +11,89 @@ Location  ;
 Device   g20v8 ;
 
 /* *************** INPUT PINS ******************** */
-PIN  1   = A14                   ; /*                                 */ 
-PIN  2   = A15                   ; /*                                 */ 
-PIN  3   = A13                   ; /*                                 */ 
-PIN  4   = MREQ                  ; /*                                 */ 
-PIN  5   = IOREQ                 ; /*                                 */ 
-PIN  6   = RD                    ; /*                                 */ 
-PIN  7   = WR                    ; /*                                 */ 
-PIN  8   = A6                    ; /*                                 */ 
-PIN  9   = A5                    ; /*                                 */ 
-PIN  10  = A4                    ; /*                                 */ 
-PIN  11  = A3                    ; /*                                 */ 
-PIN  13  = A1                    ; /*                                 */ 
-PIN  14  = A2                    ; /*                                 */ 
-PIN  23  = DIR_DEC               ; /*                                 */ 
+PIN  1   = A14                   ; /*                                */ 
+PIN  2   = A15                   ; /*                                */ 
+PIN  3   = A13                   ; /*                                */ 
+PIN  4   = MREQ                  ; /*                                */ 
+PIN  5   = IOREQ                 ; /*                                */ 
+PIN  6   = RD                    ; /*                                */ 
+PIN  7   = WR                    ; /*                                */ 
+PIN  8   = A6                    ; /*                                */ 
+PIN  9   = A5                    ; /*                                */ 
+PIN  10  = A4                    ; /*                                */ 
+PIN  11  = A3                    ; /*                                */ 
+PIN  13  = A1                    ; /*                                */ 
+PIN  14  = A2                    ; /*                                */ 
+PIN  23  = M1_DEC                ; /*                                */ 
 
 /* *************** OUTPUT PINS ******************** */
-PIN  15   = ROM_CS                        ; /*                                 */ 	   		
-PIN  16   = RAM_CS                        ; /*                                 */ 
-PIN  17   = DIS_EN                        ; /*                                 */ 
-PIN  18   = PRN_CS                        ; /*                                 */ 
-PIN  19   = DSK_CS                        ; /*                                 */ 
-PIN  20   = PRN_STR                       ; /*                                 */ 
-PIN  21   = ROM_OE                        ; /*                                 */ 
-PIN  22   = FDC_CS                        ; /*                                 */ 
+PIN  15   = ROM_CS                        ; /*                                */ 	   		
+PIN  16   = RAM_CS                        ; /*                                */ 
+PIN  17   = f17                           ; /*                                */ 
+PIN  18   = PRN_CS                        ; /*                                */ 
+PIN  19   = DSK_CS                        ; /*                                */ 
+PIN  20   = PRN_STR                       ; /*                                */ 
+PIN  21   = DIS_EN                        ; /*                                */ 
+PIN  22   = FDC_CS                        ; /*                                */ 
 
 /* **** LOGIC *** */
 $define ON 'b'1
 $define OFF 'b'0
 
+/* equations */
+DEV_ACC = MREQ & !IOREQ & A6 & A5 & A1  ;
 
-DIO_A =  MREQ # !IOREQ # A6 # A5 # A1 ;
-DME_A = !MREQ                # !A15 # !A14 ;
-DMX_R = !MREQ # IOREQ  # !RD # !A15 # !A14 # !A13 # DIR_DEC ;
+/* Impresora, puertos de lectura y escritura */
+PRN_STR = !( DEV_ACC &  A2 &  A4 & !A3 & !RD );
+PRN_CS  = !( DEV_ACC &  A2 &  A4 & !A3 & !WR );
 
-/* Disc Controller & Disc selection */
-FDC_CS  = ( DIO_A # !WR  # !A2 ) 
-        & ( DIO_A # !RD  # !A2 ) ;
-DSK_CS  = DIO_A # !WR  &  A2 &  A3 & !A4 ;
- 
+/* Disco, seleccion de disco (escritura) y controladora (lectura y escritura) */
+DSK_CS  = !( DEV_ACC &  A2 & !A4 &  A3 & !WR );
+FDC_CS  = !( DEV_ACC & !A2             & !WR  
+         #   DEV_ACC & !A2             & !RD );
+
+
+/* EL meollo de la cuestion, donde se activa y desactiva el interfaz */
+/* el interfaz se activa con in 0x66,0x67,0xE6,0xE7 */
+/* el interfaz se desactiva con out 0x66,0x67,0xE6,0xE7 ,cualquier valor */
+
+DIS_OUT = ( MREQ & !IOREQ & !WR & A6 & A5 & !A4 & !A3 & A2 & A1 ); 
+
+DIS_IN =  (                          MREQ & !IOREQ & !RD &  A6 &  A5 & !A4 & !A3 &  A2 &  A1    /* DEV_ACC & !A4 & !A3 & A2 & !RD */
+    # !A15 & !A14 & !A13 & M1_DEC * !MREQ &  IOREQ & !RD & !A6 & !A5 & !A4 &  A3 & !A2 & !A1    /* 0x0008 rutina de RST8 (errores y hooks) */
+    # !A15 & !A14 & !A13 & M1_DEC * !MREQ &  IOREQ & !RD & !A6 &  A5 &  A4 &  A3 & !A2 &  A1    /* 0x003A creo que es la rutina de leer el teclado */
+    # !A15 & !A14 & !A13 & M1_DEC * !MREQ &  IOREQ & !RD &  A6 &  A5 & !A4 & !A3 &  A2 &  A1 ); /* 0x0066 rutina de NMI*/
+
 /* Enable & disable */
-DIS_IN  = DIO_A # !WR  #  A2 # !A3 # !A4 ;
-
-DIS_OUT = ( DIO_A # !RD  #  A2 # !A3 ) 
-        & ( DMX_R # !A6 # !A5 # !A4 # !A2 #  A3 # !A1 )
-        & ( DMX_R # !A6 #  A5 #  A4 # !A2 #  A3 #  A1 )
-        & ( DMX_R #  A6 #  A5 # !A4 #  A2 # !A3 #  A1 ) ;
-
 sequenced DIS_EN {
   present OFF
-	if !DIS_IN next ON;
+	if DIS_IN next ON;
 	default next OFF;
   present ON
-	if !DIS_OUT next OFF;
+	if DIS_OUT next OFF;
 	default next ON;
 }
 
-/* Printer ports */
-PRN_STR = DIO_A # !RD #  A2 # !A3 #  A4 ;
-PRN_CS  = DIO_A # !WR #  A2 # !A3 #  A4 ;
+/* Version manual */
+f17    = DIS_OUT # !DIS_EN ;
+DIS_EN = DIS_IN  # !f17 ;
 
-/* Memory paging */
-RAM_CS = ( DME_A #  A13 #  !DIS_EN # !RD )
-       & ( DME_A #  A13 #  !DIS_EN # !WR ) ;
+/* Acceso a la RAM y ROM, depende de si esta activa la interfaz o no */
+MEM_ACC = !A14 & !A15 & !MREQ & DIS_EN ; /* curiosamente no decodifica IOREQ */
 
-ROM_CS = DME_A # !A13 #  !DIS_EN # !RD ;
+ROM_CS = !( MEM_ACC & !A13 & !RD );
+
+RAM_CS = !( MEM_ACC &  A13 & !RD
+          # MEM_ACC &  A13 & !WR );
+
+
+/* Not Necesary as Culps will update by default. */
+ROM_CS.oe  = ON ;
+RAM_CS.oe  = ON ;
+f17.oe     = ON ;
+PRN_CS.oe  = ON ;
+DSK_CS.oe  = ON ;
+PRN_STR.oe = ON ;
+DIS_EN.oe  = ON ;
+FDC_CS.oe  = ON ;
 
