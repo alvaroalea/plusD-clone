@@ -1,4 +1,10 @@
 # The +D Interface Disk for ZX Spectrum
+
+UNDER LICENSE Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
+- If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
+- You may not use the material for commercial purposes.
+- You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+
 the schematic and PCB for this interfaz, make in KICAD
 Including gerber files to direct order, the PCB is less than 10x10cm so it's very cheap.
 Al BOM for order 10 units is also available, some PCB manufacturer allow to order at same time than PCB
